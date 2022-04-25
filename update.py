@@ -23,14 +23,17 @@ def update():
         id_in_db = (j[0])
         #print(id_in_db)
         for i, row in df.iterrows():
-            if id_in_db == row['id']:
-                sql = '''update tbl_layers set citation=%s, short_description=%s, long_description=%s,
-                                     standards=%s, url=%s, display_name=%s, category=%s where id=%s'''
+            try:
+                if id_in_db == row['id']:
+                    sql = '''update tbl_layers set citation=%s, short_description=%s, long_description=%s,
+                                         standards=%s, url=%s, display_name=%s, category=%s where id=%s'''
 
-                cursor.execute(sql, (row['citation'], row['short_description'], row['long_description'],
-                                                 row['standards'], row['url'], row['display_name'], row['category'], row['id']))
+                    cursor.execute(sql, (row['citation'], row['short_description'], row['long_description'],
+                                                     row['standards'], row['url'], row['display_name'], row['category'], row['id']))
 
-                conn.commit()
-            else:
-                 print("id not found in db")
+                    conn.commit()
+                else:
+                     print("id not found in db")
+            except:
+                print("message : error occured")
 update()
